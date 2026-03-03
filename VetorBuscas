@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+void ImprimeVetor(int *x, int n){
+    printf("Vetor: ");
+    for(int i=0; i< n; i++){
+        printf("| %d ", x[i]);
+    }
+    printf("\n");
+}
+
+int BuscaLinearSequencial(int *v, int n){
+    int x = 0;
+    printf("Digite o valor: ");
+    scanf("%d", &x);
+    for(int i=0; i< n; i++){
+        if(v[i] == x){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int BuscaOrdenadaSequencial(int *v, int n){
+    int x = 0;
+    printf("Digite o valor: ");
+    scanf("%d", &x);
+    for(int i=0; i< n; i++){
+        if(v[i] == x){
+            return i;
+        }
+        else{
+            if(v[i] > x){
+                break;
+            }
+        }
+    }
+    return -1;
+}
+
+int BuscaBinaria(int *v, int n){
+    int a = n; //Guarda o
+    n /= 2;
+    int x = 0;
+    printf("Digite o valor: ");
+    scanf("%d", &x);
+    for(int i=0; i< n; i++){
+        if(v[i] == x){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+    
+    int v[7] = {23,4,67,-8,54,90,21};
+    int vo[7] = {-8,4,21,23,54,67,90};
+    printf("Inicio.\n");
+    ImprimeVetor(v, 7);
+    printf("%d", BuscaBinaria(vo, 7));
+    return 0;
+}
