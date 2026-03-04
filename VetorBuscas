@@ -37,15 +37,51 @@ int BuscaOrdenadaSequencial(int *v, int n){
     return -1;
 }
 
-int BuscaBinaria(int *v, int n){
-    int a = n; //Guarda o
-    n /= 2;
+int BuscaBinaria(int *v, int n, int f){
+    int b = f;
+    int c = n - 1;
     int x = 0;
     printf("Digite o valor: ");
     scanf("%d", &x);
-    for(int i=0; i< n; i++){
-        if(v[i] == x){
-            return i;
+    while(b <= c){ 
+        int a = (b + c) / 2;
+        if(v[a] == x){
+            return a;
+        }
+        else{
+            if(v[a] > x){
+                c = a - 1;
+               
+            }
+            else{
+                b = a + 1;
+            }
+            
+        }
+    }
+    return -1;
+}
+
+int BuscaBinariaRecursiva(int *v, int n, int f, int r){
+    int b = f;
+    int c = n - 1;
+    int x = r;
+    while(b <= c){ 
+        int a = (b + c) / 2;
+        if(v[a] == x){
+            return a;
+        }
+        else{
+            if(v[a] > x){
+                c = a - 1;
+                BuscaBinariaRecursiva(v, c, b, r);
+               
+            }
+            else{
+                b = a + 1;
+                BuscaBinariaRecursiva(v, c, b, r);
+            }
+            
         }
     }
     return -1;
@@ -57,7 +93,7 @@ int main()
     int v[7] = {23,4,67,-8,54,90,21};
     int vo[7] = {-8,4,21,23,54,67,90};
     printf("Inicio.\n");
-    ImprimeVetor(v, 7);
-    printf("%d", BuscaBinaria(vo, 7));
+    ImprimeVetor(vo, 7);
+    printf("%d", BuscaBinariaRecursiva(vo, 7,0, -8));
     return 0;
 }
