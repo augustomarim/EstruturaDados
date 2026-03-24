@@ -149,27 +149,93 @@ void InsertionSort(int *x, int n){
         
 }
 
-void mergeSort(int *V, int inicio, int fim)
+void merge(int *v, int inicio, int meio, int fim){
+        int *temp, i, j, k, tamanho, p1, p2, fim1 = 0, fim2= 0;
+        tamanho = fim - inicio + 1;
+        p1 = inicio;
+        p2 = meio + 1;
+        temp = (int*) malloc(tamanho *(sizeof(int)));
+        if(temp!=NULL){
+            for(i = 0; i < tamanho; i++){
+                if(!fim1 && !fim2){
+                    if(v[p1] < v[p2]){
+                        temp[i] = v[p1];
+                        p1++;
+                    }
+                    else{
+                        temp[i] = v[p2];
+                        p2++;
+                    }
+                }else{
+                    if(!fim1){
+                        temp[i] = v[p1++];
+                    }
+                    else{
+                        temp[i] = v[p2++];
+                    }
+                }
+            }
+            for(j = 0, k = inicio; j < tamanho; j++, k++){
+                v[k] = temp[j];
+            }
+        }
+        free(temp);
+    }
+    
+void mergeSort(int *v, int inicio, int fim)
     {
         int meio;
         if(inicio < fim) {
             meio = floor( (inicio + fim) / 2);
-            mergeSort(V, inicio, meio);
-            mergeSort(V, meio + 1, fim);
-            merge(V, inicio, meio, fim);
+            mergeSort(v, inicio, meio);
+            mergeSort(v, meio + 1, fim);
+            merge(v, inicio, meio, fim);
         }
     }
-    
-    void merge(int *V, int inicio, int meio, int fim){
-        int *aux;
-        aux = (int *) malloc((fim + 1) * sizeof(int));
-        for(int i = 0; i < fim; i++){
-            aux[i] = V[i];
-        }
-        for(i = 0; i < fim; i++){
-            if(V[i] > aux )
+
+void quickSort(int *v, int inicio, int fim){
+    int pivo;
+    if(fim > inicio){
+        pivo = particiona(v, inicio, fim);
+        quickSort(V, inicio, pivo-1);
+        quickSort(V, pivo + 1, fim);
+    }
+}
+
+void particiona(int *v, int inicio, int final ){
+    int esq, dir, pivo, aux;
+    esq = inicio;
+    dir = final;
+    pivo = V[inicio];
+    while(esq < dir){
+        while (esq <= final && v[esq] <= pivo)
+            esq++;
+        
+        while(dir >= 0 && v[dir] > pivo)
+            dir--;
+            
+        if(esq < dir) {
+            aux = v[esq];
+            v[esq] = v[dir];
+            v[dir] = aux;
         }
     }
+    v[inicio] = v[dir];
+    v[dir] = pivo;
+    return dir;
+}
+   
+
+int main()
+{
+    int vo[10] = {6,75,1,14,24,18,3,7,5,10};
+    printf("Inicio.\n");
+    ImprimeVetor(vo, 10);
+    mergeSort(vo, 0, 9);
+    ImprimeVetor(vo, 10);
+    return 0;
+}
+
 
 int main()
 {
