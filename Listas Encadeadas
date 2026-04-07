@@ -1,41 +1,80 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct celula{
+
+
+
+typedef struct cel{
     int conteudo;
-    struct celula *seguinte;
+    struct cel *seg;
 }cel;
 
 typedef struct cel* Lista;
 
 Lista* criar_Lista(){
     Lista *li = (Lista*) malloc (sizeof(Lista));
-    if(li!=NULL){
-        *li == NULL;
+    if(li != NULL){
+        *li = NULL;
     }
     return li;
 }
 
+int insere_lista_fim(Lista *lista, int x){
+    
+}
+
+int insere_lista_começo(Lista *lista, int x){
+    if(lista == NULL){
+        return 0;
+    }
+    cel* aux = (cel*) malloc (sizeof(cel));
+    if(aux == NULL) {
+        return 0;
+    }
+    aux->conteudo = x; 
+    aux->seg = NULL;
+    if((*lista) == NULL){
+        *lista = aux;
+    }
+    else{
+        cel *temp;
+        temp = *lista;
+        while(temp->seg !=NULL){
+            temp = temp->seg;
+        }
+        temp->seg = aux;
+    }
+    return 1;
+}
+
+void imprimir_lista(Lista* lista){
+    if(lista == NULL){
+       printf("\nLista não existe\n");
+    }else{
+            if(*lista == NULL){
+            printf("\nLista vazia\n");
+        }
+        cel* temp;
+        temp = *lista;
+        while(temp !=NULL){
+            printf("%d | ", temp->conteudo);
+            temp = temp->seg;
+        }
+    }
+    
+}
+
 int main()
 {
-    printf("Hello World");
+    printf("INICIO\n");
     Lista *lst;
     lst = criar_Lista();
     
-    cel c1, c2, c3;
-    c1.conteudo = 10;
-    c2.conteudo = 20;
-    c3.conteudo = 30;
-    c1.seguinte = &c2;
-    c2.seguinte = &c3;
-    c3.seguinte = NULL
+    insere_lista_fim(lst,1);
+    insere_lista_fim(lst,2);
+    insere_lista_fim(lst,3);
+    insere_lista_fim(lst,4);
+    insere_lista_fim(lst,5);
 
-    *lst = &c1;
-    
-    cel* aux = *lst;
-    printf("My Little List: \n");
-    while(aux != NULL){
-        printf("\t%d", aux->conteudo);
-        aux = aux->seg;
-    }
+    imprimir_lista(lst);
     return 0;
 }
