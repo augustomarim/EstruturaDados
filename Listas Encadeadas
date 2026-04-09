@@ -19,10 +19,6 @@ Lista* criar_Lista(){
 }
 
 int insere_lista_fim(Lista *lista, int x){
-    
-}
-
-int insere_lista_começo(Lista *lista, int x){
     if(lista == NULL){
         return 0;
     }
@@ -46,6 +42,21 @@ int insere_lista_começo(Lista *lista, int x){
     return 1;
 }
 
+int insere_lista_comeco(Lista *lista, int x){
+    if(lista == NULL){
+        return 0;
+    }
+    cel* aux = (cel*) malloc (sizeof(cel));
+    if(aux == NULL) {
+        return 0;
+    }
+    
+    aux->conteudo = x; 
+    aux->seg = *lista;
+    *lista = aux;
+    return 1;
+}
+
 void imprimir_lista(Lista* lista){
     if(lista == NULL){
        printf("\nLista não existe\n");
@@ -63,6 +74,72 @@ void imprimir_lista(Lista* lista){
     
 }
 
+int buscarValor(Lista* lista, int x){
+    if(lista == NULL){
+        return 0;
+    }
+    else{
+        if(*lista == NULL){
+            return 0;
+        }
+        cel *temp;
+        temp = *lista;
+        while(temp->seg !=NULL){
+            if(x == temp->conteudo){
+                return 1;
+            }
+            else{
+                temp = temp->seg;
+            }
+        }
+        return 0;
+        
+    }
+}
+
+int buscaValorFor(Lista *lista, int x){
+    if(lista == NULL){
+        return 0;
+    }
+    cel *aux;
+    for(aux = *lista; aux!=NULL; aux=aux->seg){
+        if(aux->conteudo == x){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int contagem(Lista *lista){
+    int a = 0;
+    if(lista == NULL){
+        return 0;
+    }
+    cel *aux;
+    for(aux = *lista; aux!=NULL; aux=aux->seg){
+        a++;
+    }
+    return a;
+    
+}
+
+void remover_lista(Lista *lista, int x){
+    if(lista == NULL){
+        printf("\nLista não existe");
+    }
+    cel *aux;
+    int a = 0;
+    for(aux = *lista; aux!=NULL; aux=aux->seg){
+        if(aux->conteudo == x){
+            free(aux -> seg);
+            a = 1;
+        }
+    }
+    if(a != 1){
+      printf("Valor não encontrado\n");  
+    }
+}
+
 int main()
 {
     printf("INICIO\n");
@@ -71,10 +148,14 @@ int main()
     
     insere_lista_fim(lst,1);
     insere_lista_fim(lst,2);
-    insere_lista_fim(lst,3);
+    insere_lista_comeco(lst,3);
     insere_lista_fim(lst,4);
-    insere_lista_fim(lst,5);
-
+    insere_lista_comeco(lst,5);
+    
+    remover_lista(lst,4);    
     imprimir_lista(lst);
+    
+    printf("\nBuscar: %d",buscarValor(lst, 2));
+    printf("\nContagem: %d",contagem(lst));
     return 0;
 }
